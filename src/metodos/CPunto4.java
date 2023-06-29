@@ -11,7 +11,7 @@ import modelo.Producto;
  */
 public class CPunto4 {
 
-    NodoABB raiz;
+    NodoABB raiz,p;
 
     public void insertar(Producto producto) {
         NodoABB nuevo = new NodoABB(producto);
@@ -44,25 +44,51 @@ public class CPunto4 {
         }
     }
 
-    public void recorridoPreOrden() {
-        System.err.println("recorrido");
-        preOrden(raiz);
+    public String recorridoPreOrden() {
+                String resultado = null;
+
+         
+         resultado =preOrden(raiz);
+
+        return resultado;
+        
     }
 
-    private void preOrden(NodoABB nodo) {
-        System.err.println(nodo);
+    private String preOrden1(NodoABB nodo) {
+        String resul = null;
         if (nodo != null) {
-            System.out.print(nodo.producto.getStock() + " ");
-            StringBuilder resultado = new StringBuilder();
-resultado.append(nodo.producto.getStock()).append(" ");
-String resul = resultado.toString();
-            System.err.println(resul);
+            resul=nodo.producto.getStock() + " ";
+            System.out.println(resul);
             preOrden(nodo.izquierdo);
             preOrden(nodo.derecho);
 
         }
+        
+        return resul;
     }
 
+        public String preOrden(NodoABB p){
+        String cadena="";
+        if(p!= null){
+            cadena= cadena+p.producto.getStock()+"  ";
+            cadena= cadena+preOrden(p.izquierdo);
+            cadena= cadena+preOrden(p.derecho);
+        }
+        return cadena;
+    }   
+    
+        public String muestraValores(int opcion){
+        p=raiz;String cadena="";
+        switch(opcion){
+            case 1:cadena=preOrden(p);break;
+         
+            default:cadena="";
+        }
+        
+        return cadena;
+    }
+    
+    
     public void inOrden(NodoABB nodo) {
         if (nodo != null) {
             inOrden(nodo.izquierdo);

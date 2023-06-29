@@ -472,7 +472,7 @@ public class Bodega extends javax.swing.JFrame {
             
         }
       }else{
-      mensaje = "La cola esta llena"; 
+      mensaje = "No ha Seleccionado nada"; 
       this.mostrarMensaje(mensaje);
       }
         
@@ -532,8 +532,10 @@ public class Bodega extends javax.swing.JFrame {
     private void rbtTercerOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtTercerOrdenActionPerformed
         if (rbtTercerOrden.isSelected()) {
             System.err.println("ENTRO AL TERCERO");
-            cuarto.recorridoPreOrden();
         
+                  
+        String cadena=cuarto.muestraValores(1);
+        txtMostrar.append(cadena+"\n");
             }
     }//GEN-LAST:event_rbtTercerOrdenActionPerformed
 
