@@ -587,7 +587,7 @@ public class Bodega extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        rbtPrimerOrden.setSelected(true);
+        rbUno.setSelected(true);
         ComportamientoAccionI(false);
     }//GEN-LAST:event_formWindowOpened
     
