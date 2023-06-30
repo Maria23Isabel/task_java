@@ -1,6 +1,8 @@
 package formulario;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import metodos.CPunto4;
 import metodos.PPunto1;
 import metodos.SPunto2;
@@ -18,8 +20,8 @@ public class Bodega extends javax.swing.JFrame {
     String mensaje = "";
     int respuesta;
     boolean algunBotonSeleccionado = false;
-
-
+    DefaultListModel listData = new DefaultListModel();
+    
     PPunto1 primero = new PPunto1();
     SPunto2 segundo = new SPunto2();
     TPunto3 tercer = new TPunto3();
@@ -33,11 +35,11 @@ public class Bodega extends javax.swing.JFrame {
     String descripcion = "";
     String provedor = "";
     String mostrar;
-
+    
     public Bodega() {
         initComponents();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,8 +77,15 @@ public class Bodega extends javax.swing.JFrame {
         rbtPrimerOrden = new javax.swing.JRadioButton();
         rbtSegundoOrden = new javax.swing.JRadioButton();
         rbtTercerOrden = new javax.swing.JRadioButton();
+        lblEtiquetaStock = new javax.swing.JLabel();
+        lblStock = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -90,8 +99,6 @@ public class Bodega extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\maria\\OneDrive\\Documentos\\portada.png")); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -273,6 +280,7 @@ public class Bodega extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonGroup1.add(rbUno);
         rbUno.setText("One");
         rbUno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +288,7 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(rbDos);
         rbDos.setText("Two");
         rbDos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,6 +296,7 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(rbTres);
         rbTres.setText("Three");
         rbTres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,6 +304,7 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(rbCuatro);
         rbCuatro.setText("Four");
         rbCuatro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,6 +374,10 @@ public class Bodega extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        lblEtiquetaStock.setText("TOTAL STOCK");
+
+        lblStock.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -371,17 +386,24 @@ public class Bodega extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(17, 17, 17)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblEtiquetaStock)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -397,7 +419,11 @@ public class Bodega extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEtiquetaStock)
+                    .addComponent(lblStock))
+                .addContainerGap(8, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -412,132 +438,174 @@ public class Bodega extends javax.swing.JFrame {
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-
+            txtMostrar.setText("");
+            listData.clear();
+            listData = primero.mostrarRecursivo(0);
+            
+            String cadena = "";
+            int cont = 0;
+            
+            for (int i = 0; i < listData.size(); i++) {
+                cadena = cadena + listData.get(i) + "\n";
+                cont++;
+            }
+            
+            txtMostrar.append(cadena);
+            
+            int stock = primero.sumarValores(cont);
+            lblStock.setText(String.valueOf(stock));
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-
+            
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-
+            
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-
+            
         }
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     private void rbUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbUnoActionPerformed
         // Recursividad.- Implementar un programa recursivo, que permita mostrar dos atributos relevantes de la lista de datos de su proyecto, además sumar los valores de un atributo numérico de su lista de datos
         algunBotonSeleccionado = true;
+        ComportamientoAccionI(false);
     }//GEN-LAST:event_rbUnoActionPerformed
 
     private void rbDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDosActionPerformed
         // Hash.- Implementar una función hash que almacene los objetos de su lista de datos. También debe mostrar todos los datos del arreglo
         algunBotonSeleccionado = true;
+        ComportamientoAccionI(true);
     }//GEN-LAST:event_rbDosActionPerformed
 
     private void rbTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTresActionPerformed
         // Hashtable.- Implementar un hashtable, con inserción de objetos de la lista, recuperar objetos , listar los objetos del hashtable
         algunBotonSeleccionado = true;
+        ComportamientoAccionI(true);
     }//GEN-LAST:event_rbTresActionPerformed
 
     private void rbCuatroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuatroActionPerformed
         // Arbol ABB.- Implementar un programa que permita crear un árbol ABB, realice Búsqueda de un valor en el árbol. Mostrar los datos usando los 3 tipos de recorrido.
         algunBotonSeleccionado = true;
+        ComportamientoAccionI(true);
     }//GEN-LAST:event_rbCuatroActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         
-      if(algunBotonSeleccionado == true){
-        //Primer Punto 
-        if (rbUno.isSelected()) {
-
+        if (algunBotonSeleccionado == true) {
+            //Primer Punto 
+            if (rbUno.isSelected()) {
+                
+            }
+            //Segundo Punto 
+            if (rbDos.isSelected()) {
+                
+            }
+            //Tercer Punto 
+            if (rbTres.isSelected()) {
+                
+            }
+            //Cuarto Punto 
+            if (rbCuatro.isSelected()) {
+                this.formulario();
+                Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
+                System.err.println(p);
+                cuarto.insertar(p);
+                
+            }
+        } else {
+            mensaje = "No ha Seleccionado nada";
+            this.mostrarMensaje(mensaje);
         }
-        //Segundo Punto 
-        if (rbDos.isSelected()) {
-
-        }
-        //Tercer Punto 
-        if (rbTres.isSelected()) {
-
-        }
-        //Cuarto Punto 
-        if (rbCuatro.isSelected()) {
-            this.formulario();
-            Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
-            System.err.println(p);
-            cuarto.insertar(p);
-            
-        }
-      }else{
-      mensaje = "No ha Seleccionado nada"; 
-      this.mostrarMensaje(mensaje);
-      }
         
-        
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-
+            
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-
+            
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-
+            
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-
+            
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-
+            
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-
+            
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-
+            
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-
+            
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void rbtPrimerOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtPrimerOrdenActionPerformed
-         if (rbtPrimerOrden.isSelected()) {
-                cuarto.recorridoInOrden();
-            }
+        if (rbtPrimerOrden.isSelected()) {
+            
+        }
     }//GEN-LAST:event_rbtPrimerOrdenActionPerformed
 
     private void rbtSegundoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtSegundoOrdenActionPerformed
         if (rbtSegundoOrden.isSelected()) {
+            
             cuarto.recorridoPostOrden();
-            }
+        }
     }//GEN-LAST:event_rbtSegundoOrdenActionPerformed
 
     private void rbtTercerOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtTercerOrdenActionPerformed
         if (rbtTercerOrden.isSelected()) {
+            
             System.err.println("ENTRO AL TERCERO");
-        
-                  
-        String cadena=cuarto.muestraValores(1);
-        txtMostrar.append(cadena+"\n");
-            }
+            
+            String cadena = cuarto.muestraValores(1);
+            txtMostrar.append(cadena + "\n");
+        }
     }//GEN-LAST:event_rbtTercerOrdenActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        rbtPrimerOrden.setSelected(true);
+        ComportamientoAccionI(false);
+    }//GEN-LAST:event_formWindowOpened
+    
+    private void ComportamientoAccionI(boolean accion) {
+        txtCodigo.setEnabled(accion);
+        txtNombre.setEnabled(accion);
+        txtStock.setEnabled(accion);
+        txtPrecio.setEnabled(accion);
+        txtDescripcion.setEnabled(accion);
+        txtProovedor.setEnabled(accion);
+        
+        btnAgregar.setEnabled(accion);
+        btnEliminar.setEnabled(accion);
+        btnBuscar.setEnabled(accion);
+        
+        lblEtiquetaStock.setVisible(!accion);
+        lblStock.setVisible(!accion);
+    }
 
     //Metodos Reutilizables
     public void agruparBotones() {
@@ -547,11 +615,10 @@ public class Bodega extends javax.swing.JFrame {
         buttonGroup1.add(rbTres);
         buttonGroup1.add(rbCuatro);
     }
-
-    public void validarBotones(){
     
+    public void validarBotones() {
+        
     }
-    
     
     public void formulario() {
         codigo = txtCodigo.getText();
@@ -561,8 +628,11 @@ public class Bodega extends javax.swing.JFrame {
         descripcion = txtDescripcion.getText();
         provedor = txtProovedor.getText();
     }
+    
+    private void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
 
-    private void mostrarMensaje(String mensaje){JOptionPane.showMessageDialog(null,mensaje);}
     /**
      * @param args the command line arguments
      */
@@ -618,6 +688,8 @@ public class Bodega extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEtiquetaStock;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JRadioButton rbCuatro;
     private javax.swing.JRadioButton rbDos;
     private javax.swing.JRadioButton rbTres;
