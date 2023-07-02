@@ -1,40 +1,46 @@
 package metodos;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Scanner;
+import java.util.Map;
 import modelo.Producto;
 
 /**
- * 
+ *
  * @author maria
  */
 public class TPunto3 {
-public static void main(String[] args) {
-        Hashtable<Object, Producto> ht = new Hashtable<>();
 
-        Producto emp = new Producto();
-        ht.put(emp.getProductosAbarrotes(), emp);
+    private Hashtable<String, Producto> productos;
 
-        emp = new Producto("AB001", "tt", 55, 12, "a", "s", 12);
-        ht.put(emp.getCodigo(), emp);
+    public TPunto3() {
+        productos = new Hashtable<>();
+    }
 
-        emp = new Producto("b", "rr", 44, 12, "a", "s", 12);
-        ht.put(emp.getCodigo(), emp);
+    public int agregarProducto(Producto producto) {
+        productos.put(producto.getCodigo(), producto);
+        return 200;
+    }
 
-        emp = new Producto("c", "ss", 3, 12, "a", "s", 12);
-        ht.put(emp.getCodigo(), emp);
+    public Producto buscarProducto(String codigo) {
+        return productos.get(codigo);
+    }
 
-        Scanner entrada = new Scanner(System.in);
-        System.out.println("Ingrese codigo a buscar:");
-        String cod = entrada.next();
-        System.out.println("" + ht.get(cod));
+    public String mostrarProductos() {
+        StringBuilder resultado = new StringBuilder();
+        for (Map.Entry<String, Producto> entry : productos.entrySet()) {
+            String clave = entry.getKey();
+            Producto producto = entry.getValue();
 
-        Enumeration lista = ht.keys();
-        while (lista.hasMoreElements()) {
-            Object clave = (Object) lista.nextElement();
-            Producto empx = ht.get(clave);
-            System.out.println("" + empx.getCodigo() + "" + empx.getNombre());
+            resultado.append("Clave: ").append(clave);
+            resultado.append(" -- Código: ").append(producto.getCodigo());
+            resultado.append(" -- Nombre: ").append(producto.getNombre());
+            resultado.append(" -- Stock: ").append(producto.getStock());
+            resultado.append(" -- Precio: ").append(producto.getPrecio());
+            resultado.append(" -- Descripción: ").append(producto.getDescripcion());
+            resultado.append(" -- Proveedor: ").append(producto.getProvedor());
+            resultado.append("\n");
         }
-}
+        return resultado.toString();
+    }
+
 }

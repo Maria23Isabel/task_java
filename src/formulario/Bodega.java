@@ -19,7 +19,7 @@ public class Bodega extends javax.swing.JFrame {
     Producto producto = new Producto();
     String mensaje = "";
     int respuesta;
-    Producto buscarArbol;
+    Producto buscar;
     DefaultListModel listData = new DefaultListModel();
 
     PPunto1 primero = new PPunto1();
@@ -254,7 +254,7 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
-        btnCrearArbol.setText("Crear Arbol");
+        btnCrearArbol.setText("Crear");
         btnCrearArbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearArbolActionPerformed(evt);
@@ -458,8 +458,7 @@ public class Bodega extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEtiquetaStock)
-                    .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                    .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -497,7 +496,7 @@ public class Bodega extends javax.swing.JFrame {
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-
+            txtMostrar.setText(tercer.mostrarProductos());
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
@@ -516,22 +515,47 @@ public class Bodega extends javax.swing.JFrame {
 
     private void rbUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbUnoActionPerformed
         // Recursividad.- Implementar un programa recursivo, que permita mostrar dos atributos relevantes de la lista de datos de su proyecto, además sumar los valores de un atributo numérico de su lista de datos
-        ComportamientoAccionI(false);
+        btnBuscar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCrearArbol.setEnabled(false);
+        btnMostrarArbol.setEnabled(false);
+        rbtInOrden.setEnabled(false);
+        rbtPostOrden.setEnabled(false);
+        rbtPreOrden.setEnabled(false);
+
     }//GEN-LAST:event_rbUnoActionPerformed
 
     private void rbDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDosActionPerformed
         // Hash.- Implementar una función hash que almacene los objetos de su lista de datos. También debe mostrar todos los datos del arreglo
-        ComportamientoAccionI(true);
+        btnBuscar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCrearArbol.setEnabled(false);
+        btnMostrarArbol.setEnabled(false);
+        rbtInOrden.setEnabled(false);
+        rbtPostOrden.setEnabled(false);
+        rbtPreOrden.setEnabled(false);
     }//GEN-LAST:event_rbDosActionPerformed
 
     private void rbTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTresActionPerformed
         // Hashtable.- Implementar un hashtable, con inserción de objetos de la lista, recuperar objetos , listar los objetos del hashtable
-        ComportamientoAccionI(true);
+        btnBuscar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnCrearArbol.setEnabled(true);
+        btnMostrarArbol.setEnabled(false);
+        rbtInOrden.setEnabled(false);
+        rbtPostOrden.setEnabled(false);
+        rbtPreOrden.setEnabled(false);
     }//GEN-LAST:event_rbTresActionPerformed
 
     private void rbCuatroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuatroActionPerformed
         // Arbol ABB.- Implementar un programa que permita crear un árbol ABB, realice Búsqueda de un valor en el árbol. Mostrar los datos usando los 3 tipos de recorrido.
-        ComportamientoAccionI(true);
+        btnBuscar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCrearArbol.setEnabled(true);
+        btnMostrarArbol.setEnabled(true);
+        rbtInOrden.setEnabled(true);
+        rbtPostOrden.setEnabled(true);
+        rbtPreOrden.setEnabled(true);
     }//GEN-LAST:event_rbCuatroActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -546,7 +570,12 @@ public class Bodega extends javax.swing.JFrame {
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-
+            this.formulario();
+            Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
+            if (tercer.agregarProducto(p) == 200) {
+                mensaje = "Registro Exitoso";
+                this.mostrarMensaje(mensaje);
+            }
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
@@ -601,26 +630,40 @@ public class Bodega extends javax.swing.JFrame {
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
+            buscar = null;
+            this.formulario();
+            codigo = txtCodigo.getText();
+            buscar = tercer.buscarProducto(codigo);
+            if (buscar != null) {
+                mensaje = "Producto Encontrado";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText(buscar.toString());
+            } else {
+                mensaje = "Producto No Encontrado";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText("");
+            }
 
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
+            buscar = null;
             this.formulario();
             nombre = txtNombre.getText();
             if (rbtPreOrden.isSelected()) {
-                buscarArbol = cuarto.buscaValores(nombre, 1);
+                buscar = cuarto.buscaValores(nombre, 1);
             }
             if (rbtInOrden.isSelected()) {
-                buscarArbol = cuarto.buscaValores(nombre, 2);
+                buscar = cuarto.buscaValores(nombre, 2);
             }
             if (rbtPostOrden.isSelected()) {
-                buscarArbol = cuarto.buscaValores(nombre, 3);
+                buscar = cuarto.buscaValores(nombre, 3);
             }
 
-            if (buscarArbol != null) {
+            if (buscar != null) {
                 mensaje = "Producto Encontrado";
                 this.mostrarMensaje(mensaje);
-                txtMostrar.setText(buscarArbol.getNombre());
+                txtMostrar.setText(buscar.toString());
             } else {
                 mensaje = "Producto No Encontrado";
                 this.mostrarMensaje(mensaje);
@@ -632,12 +675,10 @@ public class Bodega extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        rbUno.setSelected(true);
-        ComportamientoAccionI(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void txtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddActionPerformed
-        txtCodigo.setText("AB0005");
+        txtCodigo.setText("AB005");
         txtNombre.setText("Chifles");
         txtStock.setText("20");
         txtPrecio.setText("3.50");
@@ -658,35 +699,39 @@ public class Bodega extends javax.swing.JFrame {
     private void btnCrearArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearArbolActionPerformed
         Producto p;
         p = new Producto("AB001", "Arroz", 10, 1.5, "Arroz integral de grano largo", "San Fernando");
-        cuarto.insertar(p);
+        if (rbTres.isSelected()) {
+            tercer.agregarProducto(p);
+        } else if (rbCuatro.isSelected()) {
+            cuarto.insertar(p);
+        }
         p = new Producto("AB002", "Lentejas", 20, 2.5, "Lentejas secas", "Bartolome");
-        cuarto.insertar(p);
+        if (rbTres.isSelected()) {
+            tercer.agregarProducto(p);
+        } else if (rbCuatro.isSelected()) {
+            cuarto.insertar(p);
+        }
         p = new Producto("AB003", "Fideos", 30, 3.5, "Fideos Costeñita", "MarcoPolo");
-        cuarto.insertar(p);
+        if (rbTres.isSelected()) {
+            tercer.agregarProducto(p);
+        } else if (rbCuatro.isSelected()) {
+            cuarto.insertar(p);
+        }
         p = new Producto("AB004", "Azúcar", 15, 2.0, "Azúcar blanca refinada", "La Chancaca");
-        cuarto.insertar(p);
-        
+        if (rbTres.isSelected()) {
+            tercer.agregarProducto(p);
+            mensaje = "Data de Hashtable creado con Exito";
+            this.mostrarMensaje(mensaje);
+        } else if (rbCuatro.isSelected()) {
+            cuarto.insertar(p);
+            mensaje = "Data de Arbol creado con Exito";
+            this.mostrarMensaje(mensaje);
+        }
+
     }//GEN-LAST:event_btnCrearArbolActionPerformed
 
     private void btnMostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarArbolActionPerformed
         txtMostrar.setText(cuarto.muestraValores(4));
     }//GEN-LAST:event_btnMostrarArbolActionPerformed
-
-    private void ComportamientoAccionI(boolean accion) {
-        txtCodigo.setEnabled(accion);
-        txtNombre.setEnabled(accion);
-        txtStock.setEnabled(accion);
-        txtPrecio.setEnabled(accion);
-        txtDescripcion.setEnabled(accion);
-        txtProovedor.setEnabled(accion);
-
-        btnAgregar.setEnabled(accion);
-        btnEliminar.setEnabled(accion);
-        btnBuscar.setEnabled(accion);
-
-        lblEtiquetaStock.setVisible(!accion);
-        lblStock.setVisible(!accion);
-    }
 
     //Metodos Reutilizables
     public void agruparBotones() {
