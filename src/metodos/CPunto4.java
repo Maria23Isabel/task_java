@@ -68,6 +68,22 @@ public class CPunto4 {
         }
     }
 
+    private void mostrarRegistros(NodoABB nodo, StringBuilder sb) {
+        if (nodo == null) {
+            return;
+        }
+
+        mostrarRegistros(nodo.izquierdo, sb);
+        Producto producto = nodo.producto;
+        sb.append("Código: ").append(producto.getCodigo())
+                .append(" -- Nombre: ").append(producto.getNombre())
+                .append(" -- Stock: ").append(producto.getStock())
+                .append(" -- Precio: ").append(producto.getPrecio())
+                .append(" -- Descripción: ").append(producto.getDescripcion())
+                .append("\n");
+        mostrarRegistros(nodo.derecho, sb);
+    }
+
     public String muestraValores(int opcion) {
         StringBuilder cadena = new StringBuilder();
 
@@ -82,7 +98,7 @@ public class CPunto4 {
                 postOrden(raiz, cadena);
                 break;
             case 4:
-                mostrarRegistrosRecursivo(raiz, cadena);
+                mostrarRegistros(raiz, cadena);
                 break;
             default:
                 break;
@@ -253,23 +269,5 @@ public class CPunto4 {
         return sucesor;
     }
     //</editor-fold>
-
-        
-private void mostrarRegistrosRecursivo(NodoABB nodo, StringBuilder sb) {
-    if (nodo == null) {
-        return;
-    }
-    
-    mostrarRegistrosRecursivo(nodo.izquierdo, sb);
-    Producto producto = nodo.producto;
-    sb.append("Código: ").append(producto.getCodigo())
-      .append(", Nombre: ").append(producto.getNombre())
-      .append(", Stock: ").append(producto.getStock())
-      .append(", Precio: ").append(producto.getPrecio())
-      .append(", Descripción: ").append(producto.getDescripcion())
-      // Agrega aquí todos los campos adicionales que desees mostrar
-      .append("\n");
-    mostrarRegistrosRecursivo(nodo.derecho, sb);
-}
 
 }
