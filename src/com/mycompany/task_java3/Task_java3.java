@@ -27,7 +27,6 @@ public class Task_java3 {
         arbol.insertar(new Producto("AB009", "Café", 10, 4.0, "Café molido", "El Cafetal"));
         arbol.insertar(new Producto("AB010", "Mermelada", 5, 2.2, "Mermelada de frutas", "La Confitura"));
 
-        arbol.recorridoPostOrden();
 
     }
 }

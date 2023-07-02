@@ -19,9 +19,9 @@ public class Bodega extends javax.swing.JFrame {
     Producto producto = new Producto();
     String mensaje = "";
     int respuesta;
-    boolean algunBotonSeleccionado = false;
+    Producto buscarArbol;
     DefaultListModel listData = new DefaultListModel();
-    
+
     PPunto1 primero = new PPunto1();
     SPunto2 segundo = new SPunto2();
     TPunto3 tercer = new TPunto3();
@@ -35,16 +35,19 @@ public class Bodega extends javax.swing.JFrame {
     String descripcion = "";
     String provedor = "";
     String mostrar;
-    
+
     public Bodega() {
         initComponents();
+        this.agruparBotones();
+        this.agruparSubBotones();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -69,14 +72,18 @@ public class Bodega extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        btnCrearArbol = new javax.swing.JButton();
+        txtRefresh = new javax.swing.JButton();
+        txtAdd = new javax.swing.JButton();
+        btnMostrarArbol = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         rbUno = new javax.swing.JRadioButton();
         rbDos = new javax.swing.JRadioButton();
         rbTres = new javax.swing.JRadioButton();
         rbCuatro = new javax.swing.JRadioButton();
-        rbtPrimerOrden = new javax.swing.JRadioButton();
-        rbtSegundoOrden = new javax.swing.JRadioButton();
-        rbtTercerOrden = new javax.swing.JRadioButton();
+        rbtInOrden = new javax.swing.JRadioButton();
+        rbtPreOrden = new javax.swing.JRadioButton();
+        rbtPostOrden = new javax.swing.JRadioButton();
         lblEtiquetaStock = new javax.swing.JLabel();
         lblStock = new javax.swing.JLabel();
 
@@ -87,7 +94,7 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,13 +107,13 @@ public class Bodega extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 49, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,8 +139,8 @@ public class Bodega extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -214,7 +221,7 @@ public class Bodega extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtProovedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -247,6 +254,34 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
+        btnCrearArbol.setText("Crear Arbol");
+        btnCrearArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearArbolActionPerformed(evt);
+            }
+        });
+
+        txtRefresh.setText("Refresh");
+        txtRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRefreshActionPerformed(evt);
+            }
+        });
+
+        txtAdd.setText("Mas");
+        txtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAddActionPerformed(evt);
+            }
+        });
+
+        btnMostrarArbol.setText("Mostrar Arbol");
+        btnMostrarArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarArbolActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -255,14 +290,20 @@ public class Bodega extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMostrar)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnCrearArbol)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnMostrar)
+                .addGap(18, 18, 18)
+                .addComponent(btnMostrarArbol)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtAdd)
+                .addGap(18, 18, 18)
+                .addComponent(txtRefresh)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,9 +312,12 @@ public class Bodega extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnBuscar)
-                    .addComponent(btnAgregar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMostrar)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnMostrar)
+                    .addComponent(btnCrearArbol)
+                    .addComponent(txtRefresh)
+                    .addComponent(txtAdd)
+                    .addComponent(btnMostrarArbol))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -312,26 +356,11 @@ public class Bodega extends javax.swing.JFrame {
             }
         });
 
-        rbtPrimerOrden.setText("InOrden");
-        rbtPrimerOrden.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtPrimerOrdenActionPerformed(evt);
-            }
-        });
+        rbtInOrden.setText("InOrden");
 
-        rbtSegundoOrden.setText("PostOrden");
-        rbtSegundoOrden.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtSegundoOrdenActionPerformed(evt);
-            }
-        });
+        rbtPreOrden.setText("PreOrden");
 
-        rbtTercerOrden.setText("PreOrden");
-        rbtTercerOrden.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtTercerOrdenActionPerformed(evt);
-            }
-        });
+        rbtPostOrden.setText("PostOrden");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -341,37 +370,47 @@ public class Bodega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(rbUno)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbDos)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbTres)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbCuatro)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(rbTres)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbUno)
+                                    .addComponent(rbDos))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbtInOrden)
+                                    .addComponent(rbtPreOrden)
+                                    .addComponent(rbtPostOrden))))
+                        .addGap(19, 19, 19))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(rbtPrimerOrden)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rbtSegundoOrden)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtTercerOrden)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(rbCuatro)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbUno)
-                    .addComponent(rbDos)
-                    .addComponent(rbTres)
-                    .addComponent(rbCuatro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtPrimerOrden)
-                    .addComponent(rbtSegundoOrden)
-                    .addComponent(rbtTercerOrden))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(rbUno)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbDos)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(rbtPreOrden)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(rbTres)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbCuatro)
+                            .addComponent(rbtPostOrden)))
+                    .addComponent(rbtInOrden))
+                .addGap(126, 126, 126))
         );
 
         lblEtiquetaStock.setText("TOTAL STOCK");
@@ -384,46 +423,43 @@ public class Bodega extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(17, 17, 17))
+                                .addComponent(jLabel1)
+                                .addGap(550, 550, 550))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblEtiquetaStock)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEtiquetaStock)
-                    .addComponent(lblStock))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -441,156 +477,201 @@ public class Bodega extends javax.swing.JFrame {
             txtMostrar.setText("");
             listData.clear();
             listData = primero.mostrarRecursivo(0);
-            
+
             String cadena = "";
             int cont = 0;
-            
+
             for (int i = 0; i < listData.size(); i++) {
                 cadena = cadena + listData.get(i) + "\n";
                 cont++;
             }
-            
+
             txtMostrar.append(cadena);
-            
+
             int stock = primero.sumarValores(cont);
             lblStock.setText(String.valueOf(stock));
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-            
+
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-            
+
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-            
+            if (rbtPreOrden.isSelected()) {
+                txtMostrar.setText(cuarto.muestraValores(1));
+            }
+            if (rbtInOrden.isSelected()) {
+                txtMostrar.setText(cuarto.muestraValores(2));
+            }
+            if (rbtPostOrden.isSelected()) {
+                txtMostrar.setText(cuarto.muestraValores(3));
+            }
+
         }
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     private void rbUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbUnoActionPerformed
         // Recursividad.- Implementar un programa recursivo, que permita mostrar dos atributos relevantes de la lista de datos de su proyecto, además sumar los valores de un atributo numérico de su lista de datos
-        algunBotonSeleccionado = true;
         ComportamientoAccionI(false);
     }//GEN-LAST:event_rbUnoActionPerformed
 
     private void rbDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDosActionPerformed
         // Hash.- Implementar una función hash que almacene los objetos de su lista de datos. También debe mostrar todos los datos del arreglo
-        algunBotonSeleccionado = true;
         ComportamientoAccionI(true);
     }//GEN-LAST:event_rbDosActionPerformed
 
     private void rbTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTresActionPerformed
         // Hashtable.- Implementar un hashtable, con inserción de objetos de la lista, recuperar objetos , listar los objetos del hashtable
-        algunBotonSeleccionado = true;
         ComportamientoAccionI(true);
     }//GEN-LAST:event_rbTresActionPerformed
 
     private void rbCuatroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuatroActionPerformed
         // Arbol ABB.- Implementar un programa que permita crear un árbol ABB, realice Búsqueda de un valor en el árbol. Mostrar los datos usando los 3 tipos de recorrido.
-        algunBotonSeleccionado = true;
         ComportamientoAccionI(true);
     }//GEN-LAST:event_rbCuatroActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
-        if (algunBotonSeleccionado == true) {
-            //Primer Punto 
-            if (rbUno.isSelected()) {
-                
-            }
-            //Segundo Punto 
-            if (rbDos.isSelected()) {
-                
-            }
-            //Tercer Punto 
-            if (rbTres.isSelected()) {
-                
-            }
-            //Cuarto Punto 
-            if (rbCuatro.isSelected()) {
-                this.formulario();
-                Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
-                System.err.println(p);
-                cuarto.insertar(p);
-                
-            }
-        } else {
-            mensaje = "No ha Seleccionado nada";
-            this.mostrarMensaje(mensaje);
-        }
-        
 
+        //Primer Punto 
+        if (rbUno.isSelected()) {
+
+        }
+        //Segundo Punto 
+        if (rbDos.isSelected()) {
+
+        }
+        //Tercer Punto 
+        if (rbTres.isSelected()) {
+
+        }
+        //Cuarto Punto 
+        if (rbCuatro.isSelected()) {
+            this.formulario();
+            Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
+            if (cuarto.insertar(p) == 200) {
+                mensaje = "Registro Exitoso";
+                this.mostrarMensaje(mensaje);
+            }
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-            
+
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-            
+
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-            
+
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-            
+            this.formulario();
+            nombre = txtNombre.getText();
+
+            if (cuarto.eliminaNodo(nombre) == true) {
+                mensaje = "Producto Eliminado Correctamente";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText(cuarto.muestraValores(1));
+            } else {
+                mensaje = "Producto No Eliminado";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText(cuarto.muestraValores(1));
+            }
+
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-            
+
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-            
+
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
-            
+
         }
         //Cuarto Punto 
         if (rbCuatro.isSelected()) {
-            
+            this.formulario();
+            nombre = txtNombre.getText();
+            if (rbtPreOrden.isSelected()) {
+                buscarArbol = cuarto.buscaValores(nombre, 1);
+            }
+            if (rbtInOrden.isSelected()) {
+                buscarArbol = cuarto.buscaValores(nombre, 2);
+            }
+            if (rbtPostOrden.isSelected()) {
+                buscarArbol = cuarto.buscaValores(nombre, 3);
+            }
+
+            if (buscarArbol != null) {
+                mensaje = "Producto Encontrado";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText(buscarArbol.getNombre());
+            } else {
+                mensaje = "Producto No Encontrado";
+                this.mostrarMensaje(mensaje);
+                txtMostrar.setText("");
+            }
+
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void rbtPrimerOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtPrimerOrdenActionPerformed
-        if (rbtPrimerOrden.isSelected()) {
-            
-        }
-    }//GEN-LAST:event_rbtPrimerOrdenActionPerformed
-
-    private void rbtSegundoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtSegundoOrdenActionPerformed
-        if (rbtSegundoOrden.isSelected()) {
-            
-            cuarto.recorridoPostOrden();
-        }
-    }//GEN-LAST:event_rbtSegundoOrdenActionPerformed
-
-    private void rbtTercerOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtTercerOrdenActionPerformed
-        if (rbtTercerOrden.isSelected()) {
-            
-            System.err.println("ENTRO AL TERCERO");
-            
-            String cadena = cuarto.muestraValores(1);
-            txtMostrar.append(cadena + "\n");
-        }
-    }//GEN-LAST:event_rbtTercerOrdenActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         rbUno.setSelected(true);
         ComportamientoAccionI(false);
     }//GEN-LAST:event_formWindowOpened
-    
+
+    private void txtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddActionPerformed
+        txtCodigo.setText("AB0005");
+        txtNombre.setText("Chifles");
+        txtStock.setText("20");
+        txtPrecio.setText("3.50");
+        txtDescripcion.setText("Ricos Chifles Norteños");
+        txtProovedor.setText("Zair-Costero");
+    }//GEN-LAST:event_txtAddActionPerformed
+
+    private void txtRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRefreshActionPerformed
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtStock.setText("");
+        txtPrecio.setText("");
+        txtDescripcion.setText("");
+        txtProovedor.setText("");
+        txtMostrar.setText("");
+    }//GEN-LAST:event_txtRefreshActionPerformed
+
+    private void btnCrearArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearArbolActionPerformed
+        Producto p;
+        p = new Producto("AB001", "Arroz", 10, 1.5, "Arroz integral de grano largo", "San Fernando");
+        cuarto.insertar(p);
+        p = new Producto("AB002", "Lentejas", 20, 2.5, "Lentejas secas", "Bartolome");
+        cuarto.insertar(p);
+        p = new Producto("AB003", "Fideos", 30, 3.5, "Fideos Costeñita", "MarcoPolo");
+        cuarto.insertar(p);
+        p = new Producto("AB004", "Azúcar", 15, 2.0, "Azúcar blanca refinada", "La Chancaca");
+        cuarto.insertar(p);
+        
+    }//GEN-LAST:event_btnCrearArbolActionPerformed
+
+    private void btnMostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarArbolActionPerformed
+        txtMostrar.setText(cuarto.muestraValores(4));
+    }//GEN-LAST:event_btnMostrarArbolActionPerformed
+
     private void ComportamientoAccionI(boolean accion) {
         txtCodigo.setEnabled(accion);
         txtNombre.setEnabled(accion);
@@ -598,11 +679,11 @@ public class Bodega extends javax.swing.JFrame {
         txtPrecio.setEnabled(accion);
         txtDescripcion.setEnabled(accion);
         txtProovedor.setEnabled(accion);
-        
+
         btnAgregar.setEnabled(accion);
         btnEliminar.setEnabled(accion);
         btnBuscar.setEnabled(accion);
-        
+
         lblEtiquetaStock.setVisible(!accion);
         lblStock.setVisible(!accion);
     }
@@ -615,11 +696,18 @@ public class Bodega extends javax.swing.JFrame {
         buttonGroup1.add(rbTres);
         buttonGroup1.add(rbCuatro);
     }
-    
-    public void validarBotones() {
-        
+
+    public void agruparSubBotones() {
+        // Que solo se pueda seleccionar uno
+        buttonGroup2.add(rbtInOrden);
+        buttonGroup2.add(rbtPostOrden);
+        buttonGroup2.add(rbtPreOrden);
     }
-    
+
+    public void validarBotones() {
+
+    }
+
     public void formulario() {
         codigo = txtCodigo.getText();
         nombre = txtNombre.getText();
@@ -628,7 +716,7 @@ public class Bodega extends javax.swing.JFrame {
         descripcion = txtDescripcion.getText();
         provedor = txtProovedor.getText();
     }
-    
+
     private void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);
     }
@@ -671,9 +759,12 @@ public class Bodega extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrearArbol;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMostrar;
+    private javax.swing.JButton btnMostrarArbol;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -694,15 +785,17 @@ public class Bodega extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbDos;
     private javax.swing.JRadioButton rbTres;
     private javax.swing.JRadioButton rbUno;
-    private javax.swing.JRadioButton rbtPrimerOrden;
-    private javax.swing.JRadioButton rbtSegundoOrden;
-    private javax.swing.JRadioButton rbtTercerOrden;
+    private javax.swing.JRadioButton rbtInOrden;
+    private javax.swing.JRadioButton rbtPostOrden;
+    private javax.swing.JRadioButton rbtPreOrden;
+    private javax.swing.JButton txtAdd;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextArea txtMostrar;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtProovedor;
+    private javax.swing.JButton txtRefresh;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 }
