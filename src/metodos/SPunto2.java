@@ -50,20 +50,22 @@ public class SPunto2 {
     }
 
     public String mostrarProducto() {
-        StringBuilder stb = new StringBuilder();
+        StringBuilder resultado = new StringBuilder();
 
         for (Producto producto : productos) {
             if (producto != null) {
-                stb.append("Código : ").append(producto.getCodigo()).append(", ");
-                stb.append("Nombre : ").append(producto.getNombre()).append(", ");
-                stb.append("Stock : ").append(producto.getStock()).append(", ");
-                stb.append("Precio : ").append(producto.getPrecio()).append(", ");
-                stb.append("Descripción : ").append(producto.getDescripcion()).append(", ");
-                stb.append("Proveedor : ").append(producto.getProvedor()).append("\n");
+                resultado.append(" Código : ").append(producto.getCodigo());
+                resultado.append(", Nombre : ").append(producto.getNombre());
+                resultado.append(", Stock : ").append(producto.getStock());
+                resultado.append(", Precio : ").append(producto.getPrecio());
+                resultado.append(", Descripción : ").append(producto.getDescripcion());
+                resultado.append(", Proveedor : ").append(producto.getProvedor());
+                resultado.append(", \n");
             } else{
-                stb.append("*************************************************************************").append("\n");
+                resultado.append("*************************************************************************************************************");
+                resultado.append(", \n");
             }
         }
-        return stb.toString();
+        return resultado.toString();
     }
 }
