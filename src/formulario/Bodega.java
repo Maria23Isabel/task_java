@@ -473,22 +473,7 @@ public class Bodega extends javax.swing.JFrame {
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         //Primer Punto 
         if (rbUno.isSelected()) {
-            txtMostrar.setText("");
-            listData.clear();
-            listData = primero.mostrarRecursivo(0);
-
-            String cadena = "";
-            int cont = 0;
-
-            for (int i = 0; i < listData.size(); i++) {
-                cadena = cadena + listData.get(i) + "\n";
-                cont++;
-            }
-
-            txtMostrar.append(cadena);
-
-            int stock = primero.sumarValores(cont);
-            lblStock.setText(String.valueOf(stock));
+            CargarOpcionUno();
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
@@ -522,6 +507,9 @@ public class Bodega extends javax.swing.JFrame {
         rbtInOrden.setEnabled(false);
         rbtPostOrden.setEnabled(false);
         rbtPreOrden.setEnabled(false);
+        LimpiarFormulario();
+        lblEtiquetaStock.setVisible(true);
+        lblStock.setVisible(true);
 
     }//GEN-LAST:event_rbUnoActionPerformed
 
@@ -534,6 +522,7 @@ public class Bodega extends javax.swing.JFrame {
         rbtInOrden.setEnabled(false);
         rbtPostOrden.setEnabled(false);
         rbtPreOrden.setEnabled(false);
+        LimpiarFormulario();
     }//GEN-LAST:event_rbDosActionPerformed
 
     private void rbTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTresActionPerformed
@@ -545,6 +534,7 @@ public class Bodega extends javax.swing.JFrame {
         rbtInOrden.setEnabled(false);
         rbtPostOrden.setEnabled(false);
         rbtPreOrden.setEnabled(false);
+        LimpiarFormulario();
     }//GEN-LAST:event_rbTresActionPerformed
 
     private void rbCuatroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuatroActionPerformed
@@ -556,13 +546,42 @@ public class Bodega extends javax.swing.JFrame {
         rbtInOrden.setEnabled(true);
         rbtPostOrden.setEnabled(true);
         rbtPreOrden.setEnabled(true);
+        LimpiarFormulario();
     }//GEN-LAST:event_rbCuatroActionPerformed
+
+    private void CargarOpcionUno() {
+        txtMostrar.setText("");
+        listData.clear();
+        listData = primero.mostrarRecursivo(0);
+
+        String cadena = "";
+        int cont = 0;
+
+        for (int i = 0; i < listData.size(); i++) {
+            cadena = cadena + listData.get(i) + "\n";
+            cont++;
+        }
+
+        txtMostrar.append(cadena);
+
+        int stock = primero.sumarValores(cont);
+        lblStock.setText(String.valueOf(stock));
+    }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
 
         //Primer Punto 
         if (rbUno.isSelected()) {
-
+            this.formulario();
+            Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
+            int resp = primero.AgregarProducto(p);
+            if (resp == 200) {
+                mensaje = "Registro Exitoso";
+                CargarOpcionUno();
+            } else {
+                mensaje = "Error de registro";
+            }
+            this.mostrarMensaje(mensaje);
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
@@ -572,7 +591,7 @@ public class Bodega extends javax.swing.JFrame {
                 mensaje = "Registro Exitoso";
                 this.mostrarMensaje(mensaje);
                 System.out.println(segundo.mostrarProducto());
-            }else if(segundo.agregarProducto(p) ==500) {
+            } else if (segundo.agregarProducto(p) == 500) {
                 mensaje = "Error, no hay espacio.";
                 this.mostrarMensaje(mensaje);
             }
@@ -684,6 +703,17 @@ public class Bodega extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        rbUno.setSelected(true);
+        btnBuscar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCrearArbol.setEnabled(false);
+        btnMostrarArbol.setEnabled(false);
+        rbtInOrden.setEnabled(false);
+        rbtPostOrden.setEnabled(false);
+        rbtPreOrden.setEnabled(false);
+        LimpiarFormulario();
+        lblEtiquetaStock.setVisible(true);
+        lblStock.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
 
     private void txtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddActionPerformed
@@ -712,7 +742,7 @@ public class Bodega extends javax.swing.JFrame {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
-        }else if (rbDos.isSelected()) {
+        } else if (rbDos.isSelected()) {
             segundo.agregarProducto(p);
         }
         p = new Producto("AB002", "Lentejas", 20, 2.5, "Lentejas secas", "Bartolome");
@@ -720,7 +750,7 @@ public class Bodega extends javax.swing.JFrame {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
-        }else if (rbDos.isSelected()) {
+        } else if (rbDos.isSelected()) {
             segundo.agregarProducto(p);
         }
         p = new Producto("AB003", "Fideos", 30, 3.5, "Fideos Costeñita", "MarcoPolo");
@@ -728,7 +758,7 @@ public class Bodega extends javax.swing.JFrame {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
-        }else if (rbDos.isSelected()) {
+        } else if (rbDos.isSelected()) {
             segundo.agregarProducto(p);
         }
         p = new Producto("AB004", "Azúcar", 15, 2.0, "Azúcar blanca refinada", "La Chancaca");
@@ -740,7 +770,7 @@ public class Bodega extends javax.swing.JFrame {
             cuarto.insertar(p);
             mensaje = "Data de Arbol creado con Exito";
             this.mostrarMensaje(mensaje);
-        }else if (rbDos.isSelected()) {
+        } else if (rbDos.isSelected()) {
             segundo.agregarProducto(p);
             mensaje = "Data de Hash con Exito";
             this.mostrarMensaje(mensaje);
@@ -779,6 +809,18 @@ public class Bodega extends javax.swing.JFrame {
         precio = Double.parseDouble(txtPrecio.getText());
         descripcion = txtDescripcion.getText();
         provedor = txtProovedor.getText();
+    }
+
+    public void LimpiarFormulario() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtStock.setText("");
+        txtPrecio.setText("");
+        txtDescripcion.setText("");
+        txtProovedor.setText("");
+        txtMostrar.setText("");
+        lblEtiquetaStock.setVisible(false);
+        lblStock.setVisible(false);
     }
 
     private void mostrarMensaje(String mensaje) {
