@@ -23,7 +23,7 @@ public class Bodega extends javax.swing.JFrame {
     DefaultListModel listData = new DefaultListModel();
 
     PPunto1 primero = new PPunto1();
-    SPunto2 segundo = new SPunto2();
+    SPunto2 segundo = new SPunto2(11);
     TPunto3 tercer = new TPunto3();
     CPunto4 cuarto = new CPunto4();
 
@@ -492,7 +492,7 @@ public class Bodega extends javax.swing.JFrame {
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-
+            txtMostrar.setText(segundo.mostrarProducto());
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
@@ -529,7 +529,7 @@ public class Bodega extends javax.swing.JFrame {
         // Hash.- Implementar una función hash que almacene los objetos de su lista de datos. También debe mostrar todos los datos del arreglo
         btnBuscar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        btnCrearArbol.setEnabled(false);
+        btnCrearArbol.setEnabled(true);
         btnMostrarArbol.setEnabled(false);
         rbtInOrden.setEnabled(false);
         rbtPostOrden.setEnabled(false);
@@ -566,7 +566,16 @@ public class Bodega extends javax.swing.JFrame {
         }
         //Segundo Punto 
         if (rbDos.isSelected()) {
-
+            this.formulario();
+            Producto p = new Producto(codigo, nombre, stock, precio, descripcion, provedor);
+            if (segundo.agregarProducto(p) == 200) {
+                mensaje = "Registro Exitoso";
+                this.mostrarMensaje(mensaje);
+                System.out.println(segundo.mostrarProducto());
+            }else if(segundo.agregarProducto(p) ==500) {
+                mensaje = "Error, no hay espacio.";
+                this.mostrarMensaje(mensaje);
+            }
         }
         //Tercer Punto 
         if (rbTres.isSelected()) {
@@ -703,18 +712,24 @@ public class Bodega extends javax.swing.JFrame {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
+        }else if (rbDos.isSelected()) {
+            segundo.agregarProducto(p);
         }
         p = new Producto("AB002", "Lentejas", 20, 2.5, "Lentejas secas", "Bartolome");
         if (rbTres.isSelected()) {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
+        }else if (rbDos.isSelected()) {
+            segundo.agregarProducto(p);
         }
         p = new Producto("AB003", "Fideos", 30, 3.5, "Fideos Costeñita", "MarcoPolo");
         if (rbTres.isSelected()) {
             tercer.agregarProducto(p);
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
+        }else if (rbDos.isSelected()) {
+            segundo.agregarProducto(p);
         }
         p = new Producto("AB004", "Azúcar", 15, 2.0, "Azúcar blanca refinada", "La Chancaca");
         if (rbTres.isSelected()) {
@@ -724,6 +739,10 @@ public class Bodega extends javax.swing.JFrame {
         } else if (rbCuatro.isSelected()) {
             cuarto.insertar(p);
             mensaje = "Data de Arbol creado con Exito";
+            this.mostrarMensaje(mensaje);
+        }else if (rbDos.isSelected()) {
+            segundo.agregarProducto(p);
+            mensaje = "Data de Hash con Exito";
             this.mostrarMensaje(mensaje);
         }
 
